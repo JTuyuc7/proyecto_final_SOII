@@ -74,3 +74,24 @@ Para poder realizarlo desde la Interfaz grafica debes dirigirte a los [ajustes d
 
 ### Agregar una ssh manualmente.
 Si quieres hacerlo manualmente, tambien existe la opcion de poder realizarlo, debes conectarte a la consola de tu dropplet, y navegar hasta `~/.ssh` dentro de esta ubicacion deberas editar el archivo `authorized_keys` y agregar la nueva ssh publica que deseas agregar y listo, con eso tendras todo configudaro.
+
+## Como conectar ssh para telefono
+Dependiendo del tipo de telefono que tengas, en este caso android, configuraremos ssh, para poder conectarnos desde el telefon, para efectos de este ejemplo usaremos `termux` en adroid para hacer los pasos.
+
+1. Crear la clave ssh desde termux, con esto asumimos que ssh, ya se encuentra instalado en termux.
+    `ssh-keygen -t ed25519 -C "android-user"`
+2. Aceptamos la ruta predeterminada en termux
+   `Enter file in which to save the key (/data/data/com.termux/files/home/.ssh/id_ed25519):`
+3. Copiamos la clave publica, para agregarla a nuestro droplet
+   `cat ~/.ssh/id_ed25519.pub`
+4. Dentro del droplet agregamos la nueva clave ssh .
+5. En termux creamos el archivo de configuraciones para poder acceder de forma mas rapida.
+  `mkdir -p ~/.ssh && nano ~/.ssh/config`.
+6. Agregamos la configuracion necesaria
+   ```bash
+      Host do
+      HostName <IP_del_droplet>
+      User root
+      IdentityFile ~/.ssh/id_ed25519 
+    ```
+7. Con esto deberiamos ser capaces de acceder a nuestro servidor usando nuestro telefono.
