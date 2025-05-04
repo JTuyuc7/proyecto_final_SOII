@@ -29,4 +29,27 @@ id_ed25519_digitalocean.pub
 
 **Nota** importante recordar que el contenido de estos archivo es sensible.
 
+### Configurar la ssh
+Para esta configuracion que hemos realizado la conexion a nuestro droplet es mediante la clave ssh que generamos, sin embargo el comando para poder conectarnos es complicado y dificil de recordar.
+```bash
+ssh -i ~/.ssh/id_ed25519_digitalocean root@IP_DEL_DROPLET
+```
+y tener que recordar eso siempre puede ser complicado, para poder solucionar este problema podemos editar el archivo de configuraciones `config` ubicado en 
+```bash
+/Users/<tu_user>/.ssh
+```
+y agregar la siguiente configuracion
+```bash
+Host digitalocean-server # o el nombre que quieras
+     HostName IP_DEL_DROPLET
+     User root
+     IdentityFile ~/.ssh/id_ed25519_digitalocean_server # O el nombre que le hayas dado
+```
+esto nos permitira conectarnos de la siguiente forma.
+```bash
+ssh digitalocean-server
+```
+que es mucho mas sencillo de recordar, nos pedira que se agregue la ip de configuracion a los hosts de nuestra maquina, para que se pueda establecer la conexion.
+
+
 ## Windows
