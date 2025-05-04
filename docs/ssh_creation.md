@@ -53,3 +53,24 @@ que es mucho mas sencillo de recordar, nos pedira que se agregue la ip de config
 
 
 ## Windows
+Es importante establecer los pasos adecuados para poder conectarnos desde un entorno de desarrollo windows, y para este tenemos los siguientes pasos.
+
+### Generar la SSH key
+En la terminal que uses en windows, ejecuta lo siguiente
+```bash
+ssh-keygen -t ed25519 -C "tu-correo-windows@example.com"
+```
+recomendacion, para windows como para mac, es importante identificar las claves correctamente para no perdernos, al igual que en mac, este nos preguntara donde queremos guardar la clave generada y el nombre, aca puedes cambiar la ubicacion y el nombre al que desees.
+```bash
+C:\Users\<tu_user>/.ssh/id_ed25519_digitalocean_windows
+```
+esta tambien nos generara la clave privada como publica, siempre es importante recordar que estos datos tiene que ser privados y protegidos para evitar algun tipo de compromiso a los datos.
+
+### Como agrear una nueva ssh key en mi droplet?
+Existen dos formas de poder agregar una nueva ssh key al droplet creado, esto nos permitira conectarnos desde computadoras registradas correctamente, pero, como se hace?
+
+### Agregar una ssh key, desde la UI
+Para poder realizarlo desde la Interfaz grafica debes dirigirte a los [ajustes de tu cuenta](https://cloud.digitalocean.com/account/security?i=ecd412) y simplemente dale click a add ssh key, ingresas la clave publica y listo, podras conectarte a tu dropplet usando otra computadora.
+
+### Agregar una ssh manualmente.
+Si quieres hacerlo manualmente, tambien existe la opcion de poder realizarlo, debes conectarte a la consola de tu dropplet, y navegar hasta `~/.ssh` dentro de esta ubicacion deberas editar el archivo `authorized_keys` y agregar la nueva ssh publica que deseas agregar y listo, con eso tendras todo configudaro.
