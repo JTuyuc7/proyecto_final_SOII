@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Bienvenido</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+    
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    
+    .content {
+      background-color: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .card {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #3498db;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #2980b9;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #2c3e50;
+      color: white;
+      border-radius: 10px 10px 0 0;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>¡Hola desde Nginx en Docker!</h1>
+    <p>Bienvenido a nuestro servidor web containerizado</p>
+  </header>
+  
+  <div class="container">
+    <div class="content">
+      <h2>Proyecto Final - Sistemas Operativos II</h2>
+      <p>Este es un ejemplo de una página web servida desde un contenedor Docker usando Nginx como servidor web.</p>
+      
+      <div class="card">
+        <h3>Características de Nginx</h3>
+        <ul>
+          <li>Alto rendimiento</li>
+          <li>Bajo consumo de recursos</li>
+          <li>Capacidad para manejar conexiones concurrentes</li>
+          <li>Soporte para balanceo de carga</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3>Ventajas de Docker</h3>
+        <ul>
+          <li>Entornos consistentes</li>
+          <li>Aislamiento de aplicaciones</li>
+          <li>Despliegue rápido</li>
+          <li>Eficiencia en el uso de recursos</li>
+        </ul>
+      </div>
+      
+      <button class="btn" onclick="showMessage()">Haz clic aquí</button>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 - Proyecto Final Sistemas Operativos II</p>
+  </footer>
+  
+  <script>
+    function showMessage() {
+      alert("¡Gracias por visitar nuestro proyecto de Nginx en Docker!");
+    }
+  </script>
+</body>
+
+</html>
