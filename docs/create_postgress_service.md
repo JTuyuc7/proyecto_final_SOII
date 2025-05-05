@@ -1,25 +1,6 @@
 # Como crear un usuario postgress en el droplet
 
-En esta guia exploraremos la forma de agregar un nuevo usuario postgress, agregarlo al grupo de docker y darle los permisos necesarios para que pueda ejecutar unicamente lo que necesita.
-
-### Crear un usuario.
-Para crear un usuario espeficio para postgress
-```bash
-sudo adduser --shell /bin/bash postgresuser
-```
-
-nos pedira confirmar los detalles sobre, el nombre, grup etc... para esto podemos dejar los valores por defecto para qno tener que cambiarlos.
-
-### Agregarlo al grupo de docker
-Es importante que para que este usuario tenga acceso a ejecutar contenedores y servicios necesarios con docker, debemos agregarlo al grupo correspondiente.
-```bash
-sudo usermod -aG docker postgresuser
-```
-una vez agregado al grupo correspondiente, necesitamos restringirle los accesso al usuario para que no pueda acceder a otros recursos que no necesita
-```bash
-sudo chmod 700 /home/postgresuser
-```
-Listo, con esto deberiamos poder cambiarnos de usuario al usuario de postgres
+Debemos cambiarnos de usuario al usuario de postgres
 ```bash
 su - postgresuser
 ```
@@ -46,3 +27,23 @@ Necesitaremos los siguientes datos
 * Base de datos: proyectos
 
 Con esto deberiamos poder conectarnos fuera del droplet para tener acceso a la base de datos.
+
+Si en dado caso no nos podamos conectar, es necesario habilitar el puerto en el droplet para que podamos tener acceso.
+
+### Como habilitar el puerto.
+Para ejecutar este comando, se debe contar con permisos de administrador (sudo)
+```bash
+sudo ufw allow 6432/tcp
+```
+### Verificar el puerto habilitado
+```bash
+sudo ufw status
+```
+Si vemos algo asi
+```bash
+6432/tcp                  ALLOW       Anywhere
+```
+
+Si por algun motivo no vemos eso, es necesario habilitar las reglas UFW para que funcione (habilitar UFW)[./docs/enable_ufw.md]
+
+
