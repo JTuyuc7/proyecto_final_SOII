@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SERVICE_PATH="/opt/proyecto_so2/proyecto_final_SOII/services/pythonweb"
-OWNER="pythonuser"
+SERVICE_PATH="/opt/proyecto_so2/proyecto_final_SOII/services/postgres"
+OWNER="postgresuser"
 
 echo "🔧 Corrigiendo permisos en: $SERVICE_PATH"
 echo "👤 Dueño esperado: $OWNER"

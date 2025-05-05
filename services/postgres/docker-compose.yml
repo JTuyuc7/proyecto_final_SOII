@@ -5,10 +5,12 @@ services:
     image: postgres:15
     container_name: postgres_db
     restart: always
-    environment:
-      POSTGRES_USER: remotereader
-      POSTGRES_PASSWORD: tu_password_segura
-      POSTGRES_DB: proyectos
+    env_file:
+      - .env
+    # environment:
+    #   POSTGRES_USER: <tu_usuario>
+    #   POSTGRES_PASSWORD: <tu_contraseña>
+    #   POSTGRES_DB: <tu_base_de_datos>
     ports:
       - "6432:5432"
     volumes:

@@ -1,0 +1,11 @@
+services:
+  ftp:
+    image: fauria/vsftpd
+    container_name: ftp_server
+    restart: unless-stopped
+    ports:
+      - "8022:21"
+    volumes:
+      - /home/ftpuser/ftpdata:/home/vsftpd
+    env_file:
+      - .env
