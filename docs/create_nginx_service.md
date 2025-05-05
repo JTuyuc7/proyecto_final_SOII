@@ -1,5 +1,5 @@
 # NGINX servicio
-Primero necesitaremos crear el usuario correspondiente (crear usuario)[./docs/user_creation.md]
+Primero necesitaremos crear el usuario correspondiente (crear usuario)[./user_creation.md]
 
 una vez creado el usuario, neceitamos darle accesos a la carpeta que le corresponde. (restringir acceso)[docs/access_restriction.md]
 
