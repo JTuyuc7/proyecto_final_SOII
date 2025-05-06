@@ -5,8 +5,8 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./index.html:/usr/src/app/index.html:ro
-      - /var/log/proyecto_so2/pythonweb/server.log:/app/server.log
-    command: sh -c "python -m http.server 8080 > /app/server.log 2>&1"
+      - /var/log/proyecto_so2/pythonweb:/usr/src/app/logs
+    command: sh -c "python -m http.server 8080 > logs/server.log 2>&1"
     ports:
       - "8080:8080"
     restart: unless-stopped
