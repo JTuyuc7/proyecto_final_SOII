@@ -13,3 +13,9 @@ sudo find /opt/proyecto_so2/proyecto_final_SOII/services/pythonweb -type f -exec
 sudo ufw allow 8022/tcp
 sudo ufw allow 21100:21110/tcp
 ```
+agregar los puertos a ufw
+```bash
+sudo ufw allow 8022/tcp
+sudo ufw allow 21100:21110/tcp
+sudo ufw reload
+```
