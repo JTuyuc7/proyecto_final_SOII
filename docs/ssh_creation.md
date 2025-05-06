@@ -1,97 +1,234 @@
-# Creacion de una SSH para conectarse al droplet de DigitalOcean.
+# 🔑 Configuración de SSH para Conexión Segura
 
-En esta guia mostraremos los pasos para poder crear una SSH key localmente en nuestra maquina y atravez de esta poder conectarnos a nuestro droplet.
+Este documento describe los pasos necesarios para crear y configurar claves SSH para conectarse de forma segura a un servidor (droplet) de DigitalOcean desde diferentes sistemas operativos.
 
-## Mac
-### Generar la SSH key
+## 📋 Índice
+- [Configuración en macOS](#configuración-en-macos)
+- [Configuración en Windows](#configuración-en-windows)
+- [Configuración en Android (Termux)](#configuración-en-android-termux)
+- [Agregar nuevas claves SSH al servidor](#agregar-nuevas-claves-ssh-al-servidor)
+
+## 🍎 Configuración en macOS
+
+### Generar la clave SSH
+
+1. Abre Terminal y ejecuta:
 
 ```bash
-ssh-keygen
+ssh-keygen -t ed25519 -C "tu-correo@example.com"
 ```
-Esta nos generara un clave, y nos preguntara el nombre y la ubicacion donde queremos que esta se guarde, por defecto la creara en la siguiente ubicacion
-```dotnetcli
-/Users/<tu_user>/.ssh/id_ed25519
-```
-es recomendable poder darle un nombre unico para poder distinguirla, en el caso de tener mas claves generadas, esto se puede hacer, una vez que en la terminal nos pregunte.
-```bash
-/Users/<tu_user>/.ssh/id_ed25519_digitalocean
-```
-esto nos generara tanto la clave privada como la clave publica que es la que usaremos en digital ocean.
 
-si la ubicacion que se elijio es la por defecto, esta debe estar guardada en 
-```bash
-/Users/<tu_user>/.ssh
-```
-en esta ubicacion estara guardada tanto la clave privada como la publica, esto garantizara una conexion segura entre tu maquina y tu servidor, el contenido que tendras que copiar para realizar la conexion sera la que tenga la clave publica
-```bash
-id_ed25519_digitalocean.pub
-``` 
+2. Cuando se te pregunte por la ubicación, puedes aceptar la ruta predeterminada o especificar una personalizada:
 
-**Nota** importante recordar que el contenido de estos archivo es sensible.
+```
+/Users/<tu_usuario>/.ssh/id_ed25519_digitalocean
+```
 
-### Configurar la ssh
-Para esta configuracion que hemos realizado la conexion a nuestro droplet es mediante la clave ssh que generamos, sin embargo el comando para poder conectarnos es complicado y dificil de recordar.
+> **Nota**: Es recomendable usar un nombre descriptivo para distinguir esta clave de otras que puedas tener.
+
+3. Se te pedirá una frase de contraseña (passphrase). Es recomendable establecer una para mayor seguridad.
+
+4. El proceso generará dos archivos:
+   - `id_ed25519_digitalocean` (clave privada)
+   - `id_ed25519_digitalocean.pub` (clave pública)
+
+### Configurar el cliente SSH
+
+Para simplificar la conexión, puedes configurar el archivo `config` de SSH:
+
+1. Edita o crea el archivo de configuración:
+
 ```bash
-ssh -i ~/.ssh/id_ed25519_digitalocean root@IP_DEL_DROPLET
+nano ~/.ssh/config
 ```
-y tener que recordar eso siempre puede ser complicado, para poder solucionar este problema podemos editar el archivo de configuraciones `config` ubicado en 
-```bash
-/Users/<tu_user>/.ssh
+
+2. Agrega la siguiente configuración:
+
 ```
-y agregar la siguiente configuracion
-```bash
-Host digitalocean-server # o el nombre que quieras
-     HostName IP_DEL_DROPLET
+Host digitalocean-server
+     HostName <IP_DEL_SERVIDOR>
      User root
-     IdentityFile ~/.ssh/id_ed25519_digitalocean_server # O el nombre que le hayas dado
+     IdentityFile ~/.ssh/id_ed25519_digitalocean
 ```
-esto nos permitira conectarnos de la siguiente forma.
+
+3. Guarda el archivo (Ctrl+O, Enter, Ctrl+X en nano).
+
+### Conectarse al servidor
+
+Ahora puedes conectarte simplemente con:
+
 ```bash
 ssh digitalocean-server
 ```
-que es mucho mas sencillo de recordar, nos pedira que se agregue la ip de configuracion a los hosts de nuestra maquina, para que se pueda establecer la conexion.
 
+La primera vez que te conectes, se te pedirá que confirmes la autenticidad del host. Escribe "yes" para continuar.
 
-## Windows
-Es importante establecer los pasos adecuados para poder conectarnos desde un entorno de desarrollo windows, y para este tenemos los siguientes pasos.
+## 🪟 Configuración en Windows
 
-### Generar la SSH key
-En la terminal que uses en windows, ejecuta lo siguiente
+### Generar la clave SSH
+
+1. Abre PowerShell o Git Bash y ejecuta:
+
 ```bash
 ssh-keygen -t ed25519 -C "tu-correo-windows@example.com"
 ```
-recomendacion, para windows como para mac, es importante identificar las claves correctamente para no perdernos, al igual que en mac, este nos preguntara donde queremos guardar la clave generada y el nombre, aca puedes cambiar la ubicacion y el nombre al que desees.
-```bash
-C:\Users\<tu_user>/.ssh/id_ed25519_digitalocean_windows
+
+2. Cuando se te pregunte por la ubicación, puedes especificar:
+
 ```
-esta tambien nos generara la clave privada como publica, siempre es importante recordar que estos datos tiene que ser privados y protegidos para evitar algun tipo de compromiso a los datos.
+C:\Users\<tu_usuario>\.ssh\id_ed25519_digitalocean_windows
+```
 
-### Como agrear una nueva ssh key en mi droplet?
-Existen dos formas de poder agregar una nueva ssh key al droplet creado, esto nos permitira conectarnos desde computadoras registradas correctamente, pero, como se hace?
+3. Se te pedirá una frase de contraseña (passphrase). Es recomendable establecer una para mayor seguridad.
 
-### Agregar una ssh key, desde la UI
-Para poder realizarlo desde la Interfaz grafica debes dirigirte a los [ajustes de tu cuenta](https://cloud.digitalocean.com/account/security?i=ecd412) y simplemente dale click a add ssh key, ingresas la clave publica y listo, podras conectarte a tu dropplet usando otra computadora.
+### Configurar el cliente SSH
 
-### Agregar una ssh manualmente.
-Si quieres hacerlo manualmente, tambien existe la opcion de poder realizarlo, debes conectarte a la consola de tu dropplet, y navegar hasta `~/.ssh` dentro de esta ubicacion deberas editar el archivo `authorized_keys` y agregar la nueva ssh publica que deseas agregar y listo, con eso tendras todo configudaro.
+1. Crea o edita el archivo de configuración SSH:
 
-## Como conectar ssh para telefono
-Dependiendo del tipo de telefono que tengas, en este caso android, configuraremos ssh, para poder conectarnos desde el telefon, para efectos de este ejemplo usaremos `termux` en adroid para hacer los pasos.
+```bash
+notepad C:\Users\<tu_usuario>\.ssh\config
+```
 
-1. Crear la clave ssh desde termux, con esto asumimos que ssh, ya se encuentra instalado en termux.
-    `ssh-keygen -t ed25519 -C "android-user"`
-2. Aceptamos la ruta predeterminada en termux
-   `Enter file in which to save the key (/data/data/com.termux/files/home/.ssh/id_ed25519):`
-3. Copiamos la clave publica, para agregarla a nuestro droplet
-   `cat ~/.ssh/id_ed25519.pub`
-4. Dentro del droplet agregamos la nueva clave ssh .
-5. En termux creamos el archivo de configuraciones para poder acceder de forma mas rapida.
-  `mkdir -p ~/.ssh && nano ~/.ssh/config`.
-6. Agregamos la configuracion necesaria
-   ```bash
-      Host do
-      HostName <IP_del_droplet>
-      User root
-      IdentityFile ~/.ssh/id_ed25519 
-    ```
-7. Con esto deberiamos ser capaces de acceder a nuestro servidor usando nuestro telefono.
+2. Agrega la siguiente configuración:
+
+```
+Host digitalocean-windows
+     HostName <IP_DEL_SERVIDOR>
+     User root
+     IdentityFile C:\Users\<tu_usuario>\.ssh\id_ed25519_digitalocean_windows
+```
+
+3. Guarda el archivo.
+
+### Conectarse al servidor
+
+Ahora puedes conectarte con:
+
+```bash
+ssh digitalocean-windows
+```
+
+## 📱 Configuración en Android (Termux)
+
+### Instalar Termux
+
+1. Instala [Termux desde F-Droid](https://f-droid.org/packages/com.termux/) (recomendado) o Google Play Store.
+2. Abre Termux y actualiza los paquetes:
+
+```bash
+pkg update && pkg upgrade
+```
+
+3. Instala OpenSSH:
+
+```bash
+pkg install openssh
+```
+
+### Generar la clave SSH
+
+1. Ejecuta:
+
+```bash
+ssh-keygen -t ed25519 -C "android-user"
+```
+
+2. Acepta la ruta predeterminada:
+
+```
+/data/data/com.termux/files/home/.ssh/id_ed25519
+```
+
+3. Opcionalmente, establece una frase de contraseña.
+
+### Configurar el cliente SSH
+
+1. Crea el directorio y archivo de configuración:
+
+```bash
+mkdir -p ~/.ssh && nano ~/.ssh/config
+```
+
+2. Agrega la siguiente configuración:
+
+```
+Host do
+     HostName <IP_DEL_SERVIDOR>
+     User root
+     IdentityFile ~/.ssh/id_ed25519
+```
+
+3. Guarda el archivo (Ctrl+O, Enter, Ctrl+X en nano).
+
+### Conectarse al servidor
+
+Ahora puedes conectarte con:
+
+```bash
+ssh do
+```
+
+## 🔄 Agregar nuevas claves SSH al servidor
+
+Hay dos formas de agregar nuevas claves SSH a un servidor existente:
+
+### Método 1: Desde la interfaz de DigitalOcean
+
+1. Accede a los [ajustes de seguridad de tu cuenta](https://cloud.digitalocean.com/account/security)
+2. Haz clic en "Add SSH Key"
+3. Pega el contenido de tu clave pública (el archivo `.pub`)
+4. Asigna un nombre descriptivo a la clave
+5. Haz clic en "Add SSH Key"
+
+### Método 2: Manualmente desde el servidor
+
+1. Conéctate al servidor con una clave SSH ya configurada o mediante la consola web
+2. Edita el archivo de claves autorizadas:
+
+```bash
+nano ~/.ssh/authorized_keys
+```
+
+3. Agrega el contenido de tu clave pública (el archivo `.pub`) en una nueva línea
+4. Guarda el archivo (Ctrl+O, Enter, Ctrl+X en nano)
+
+## 🔒 Buenas prácticas de seguridad
+
+1. **Protege tus claves privadas**: Nunca compartas tus archivos de clave privada
+2. **Usa frases de contraseña**: Siempre protege tus claves con una frase de contraseña fuerte
+3. **Usa nombres descriptivos**: Nombra tus claves de manera que puedas identificar fácilmente su propósito
+4. **Revisa periódicamente**: Verifica regularmente las claves autorizadas en tu servidor
+5. **Usa ed25519**: Este tipo de clave ofrece un buen equilibrio entre seguridad y rendimiento
+6. **Rota tus claves**: Considera generar nuevas claves periódicamente, especialmente para servidores críticos
+
+## 📝 Solución de problemas comunes
+
+### Permisos incorrectos
+
+Si recibes errores sobre permisos demasiado abiertos:
+
+```bash
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519*
+chmod 600 ~/.ssh/config
+```
+
+### Clave no reconocida
+
+Si el servidor no reconoce tu clave:
+
+1. Verifica que la clave pública esté correctamente agregada al archivo `authorized_keys`
+2. Asegúrate de estar usando la clave privada correcta
+3. Comprueba que los permisos de los archivos sean adecuados
+
+### Problemas de conexión
+
+Si no puedes conectarte:
+
+1. Verifica que el servidor esté en línea
+2. Comprueba que el puerto SSH (generalmente 22) esté abierto en el firewall
+3. Intenta usar el modo verbose para obtener más información:
+
+```bash
+ssh -v digitalocean-server
+```
