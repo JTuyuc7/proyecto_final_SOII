@@ -9,5 +9,5 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro   # ✅ Montar config personalizada
       - /var/log/proyecto_so2/nginx/access.log:/var/log/nginx/access.log
       - /var/log/proyecto_so2/nginx/error.log:/var/log/nginx/error.log
-    user: "1003:1003"
+    user: ${UID}:${GID}  # ✅ Ejecutar como el usuario actual
     restart: unless-stopped
