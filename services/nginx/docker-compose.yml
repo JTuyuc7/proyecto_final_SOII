@@ -8,4 +8,5 @@ services:
       - ./index.html:/usr/share/nginx/html/index.html:ro
       - /var/log/proyecto_so2/nginx/access.log:/var/log/nginx/access.log
       - /var/log/proyecto_so2/nginx/error.log:/var/log/nginx/error.log
+    user: "1003:1003"
     restart: unless-stopped
