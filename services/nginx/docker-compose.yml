@@ -6,6 +6,7 @@ services:
       - "80:80"
     volumes:
       - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro   # ✅ Montar config personalizada
       - /var/log/proyecto_so2/nginx/access.log:/var/log/nginx/access.log
       - /var/log/proyecto_so2/nginx/error.log:/var/log/nginx/error.log
     user: "1003:1003"
