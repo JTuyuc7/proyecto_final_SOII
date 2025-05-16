@@ -4,10 +4,10 @@ services:
     container_name: python_web
     working_dir: /usr/src/app
     volumes:
-      - /home/pythonuser/public_html:/usr/src/app:ro
-      - ./index.html:/usr/src/app/index.html:ro
+      - /home/pythonuser/public_html:/usr/src/app/public:ro
+      - ./index.html:/usr/src/app/public/index.html:ro
       - /var/log/proyecto_so2/pythonweb:/usr/src/app/logs
-    command: sh -c "python -m http.server 8080 > logs/server.log 2>&1"
+    command: sh -c "cd /usr/src/app/public && python -m http.server 8080 > /usr/src/app/logs/server.log 2>&1"
     ports:
       - "8080:8080"
     restart: unless-stopped
