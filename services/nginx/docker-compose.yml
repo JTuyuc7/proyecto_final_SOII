@@ -11,6 +11,8 @@ services:
       - /var/log/proyecto_so2/nginx/error.log:/var/log/nginx/error.log
     # user: ${UID}:${GID}  # ✅ Ejecutar como el usuario actual
     restart: unless-stopped
+    expose:
+      - "80"
     env_file:
       - .env
     networks:
