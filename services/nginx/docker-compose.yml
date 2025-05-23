@@ -2,12 +2,20 @@ services:
   web:
     image: nginx:latest
     container_name: nginx_web
-    ports:
-      - "80:80"
+    # ports:
+    #   - "80:80"
     volumes:
       - ./index.html:/usr/share/nginx/html/index.html:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro   # ✅ Montar config personalizada
       - /var/log/proyecto_so2/nginx/access.log:/var/log/nginx/access.log
       - /var/log/proyecto_so2/nginx/error.log:/var/log/nginx/error.log
-    user: ${UID}:${GID}  # ✅ Ejecutar como el usuario actual
+    # user: ${UID}:${GID}  # ✅ Ejecutar como el usuario actual
     restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - web  
+
+networks:
+  web:
+    external: true
