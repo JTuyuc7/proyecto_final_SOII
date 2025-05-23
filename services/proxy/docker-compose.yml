@@ -4,6 +4,8 @@ services:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - "80:80"
       - "443:443"
@@ -11,7 +13,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certs:/etc/nginx/certs:rw
       - ./vhost.d:/etc/nginx/vhost.d:rw
-      - ./html:/usr/share/nginx/html:rw     # opcional para redirecciones
+      - ./html:/usr/share/nginx/html:rw    # opcional para redirecciones
     networks:
       - web
 
