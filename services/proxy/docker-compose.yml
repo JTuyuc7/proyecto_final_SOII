@@ -8,6 +8,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    labels:
+      - com.github.nginx-proxy.nginx-proxy=true
     volumes:
       - /etc/nginx/vhost.d
       - /usr/share/nginx/html
