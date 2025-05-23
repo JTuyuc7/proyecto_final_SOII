@@ -13,7 +13,7 @@ services:
     volumes:
       - /etc/nginx/vhost.d
       - /usr/share/nginx/html
-      - /var/run/docker.sock:/var/run/docker.sock:ro   # 🔁 <- Cambiado aquí
+      - /var/run/docker.sock:/tmp/docker.sock:ro  # ✅ requerido por nginx-proxy moderno
       - ./certs:/etc/nginx/certs:ro
     networks:
       - web
@@ -24,9 +24,9 @@ services:
     restart: unless-stopped
     environment:
       - DEFAULT_EMAIL=tuemail@correo.com
-      - NGINX_PROXY_CONTAINER=nginx_proxy   # 🔁 También lo agregamos como refuerzo
+      - NGINX_PROXY_CONTAINER=nginx_proxy
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # ✅ como espera acme-companion
       - ./certs:/etc/nginx/certs
       - /etc/nginx/vhost.d
       - /usr/share/nginx/html
