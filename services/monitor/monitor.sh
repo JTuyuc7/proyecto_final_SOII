@@ -21,5 +21,5 @@ disk_usage=$(df -h | grep '^/dev/' | awk '{ sum += $3 } END { print sum }')
 info="CPU Usage: $cpu_usage%\nVirtual Memory Usage: $virtual_memory%\nPhysical Memory Usage: $physical_memory%\nDisk Usage: $disk_usage"
 
 # Save the information to the home directory
-echo -e "$info" >> /home/monitoruser/rendimiento_sistema.log
+echo -e "$info" >> $HOME/rendimiento_sistema.log
 
